@@ -18,7 +18,7 @@ export const ImageForm: React.FC = () => {
       manufacturer: '',
       name_keywords: ''
     },
-    systemPrompt: DEFAULT_SYSTEM_PROMPT,
+    systemPrompt: '',
     def_prompt_lang: 'German',
     model_name: 'gpt'
   });
@@ -117,7 +117,7 @@ export const ImageForm: React.FC = () => {
         manufacturer: '',
         name_keywords: ''
       },
-      systemPrompt: DEFAULT_SYSTEM_PROMPT,
+      systemPrompt: '',
       def_prompt_lang: 'German',
       model_name: 'gpt'
     });
@@ -271,14 +271,16 @@ export const ImageForm: React.FC = () => {
             {/* System Prompt Input */}
             <div>
               <label htmlFor="systemPrompt" className="block text-sm font-medium text-gray-700 mb-2">
-                System Prompt
+                Custom System Prompt (Optional)
               </label>
               <textarea
                 id="systemPrompt"
                 value={formData.systemPrompt}
                 onChange={handleInputChange('systemPrompt')}
-                placeholder="Enter your system prompt or instructions..."
-                rows={4}
+                placeholder="🎯 We've already set up a smart default prompt in german and english that creates SEO-optimized titles and sales descriptions for furniture analysis. 
+
+💡 Leave this empty to use our optimized default, or write your own custom instructions here to override the default behavior..."
+                rows={6}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
               />
             </div>
