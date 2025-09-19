@@ -8,7 +8,7 @@ export interface FurnitureAnalysisRequest {
   };
   readonly prompt: string;
   readonly def_prompt_lang: 'German' | 'English';
-  readonly model_name: 'gpt' | 'gemini';
+  readonly model_name: 'gpt-4.1' | 'gemini-2.5-pro';
 }
 
 export interface FurnitureAnalysisResponse {

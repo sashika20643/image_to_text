@@ -1,9 +1,17 @@
 export interface PromptTemplatesResponse {
-  readonly default_templates: {
-    readonly german: string;
-    readonly english?: string;
-    readonly french?: string;
+  readonly custom_prompt_examples: {
+    readonly english: string[];
+    readonly german: string[];
   };
+  readonly default_templates: {
+    readonly english: string;
+    readonly german: string;
+  };
+  readonly supported_languages: {
+    readonly english: string[];
+    readonly german: string[];
+  };
+  readonly usage_notes: string[];
 }
 
 export interface ApiError {

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { FormData, FormResponse } from '../types/formTypes';
 import { ImagePreview } from './ImagePreview';
 import { ResponseDisplay } from './ResponseDisplay';
-import { DEFAULT_SYSTEM_PROMPT } from '../constants/defaultPrompts';
+import { PromptTemplatesModal } from './PromptTemplatesModal';
 import { useImageUpload } from '../hooks/useImageUpload';
 import { FurnitureAnalysisApiService } from '../services/furnitureAnalysisApi';
 import { FurnitureAnalysisResponse } from '../types/furnitureApiTypes';
@@ -20,10 +20,11 @@ export const ImageForm: React.FC = () => {
     },
     systemPrompt: '',
     def_prompt_lang: 'German',
-    model_name: 'gpt'
+    model_name: 'gpt-4.1'
   });
   const [response, setResponse] = useState<FormResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPromptModalOpen, setIsPromptModalOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -119,7 +120,7 @@ export const ImageForm: React.FC = () => {
       },
       systemPrompt: '',
       def_prompt_lang: 'German',
-      model_name: 'gpt'
+      model_name: 'gpt-4.1'
     });
     setResponse(null);
     resetUpload();
@@ -270,9 +271,22 @@ export const ImageForm: React.FC = () => {
 
             {/* System Prompt Input */}
             <div>
-              <label htmlFor="systemPrompt" className="block text-sm font-medium text-gray-700 mb-2">
-                Custom System Prompt (Optional)
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="systemPrompt" className="block text-sm font-medium text-gray-700">
+                  Custom System Prompt (Optional)
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setIsPromptModalOpen(true)}
+                  className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  View Prompts & Templates
+                </button>
+              </div>
               <textarea
                 id="systemPrompt"
                 value={formData.systemPrompt}
@@ -314,8 +328,8 @@ export const ImageForm: React.FC = () => {
                   onChange={handleInputChange('model_name')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="gpt">GPT</option>
-                  <option value="gemini">Gemini</option>
+                  <option value="gpt-4.1">GPT-4.1</option>
+                  <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
                 </select>
               </div>
             </div>
@@ -343,6 +357,12 @@ export const ImageForm: React.FC = () => {
           <ResponseDisplay response={response} isLoading={isLoading} />
         </div>
       </div>
+
+      {/* Prompt Templates Modal */}
+      <PromptTemplatesModal 
+        isOpen={isPromptModalOpen} 
+        onClose={() => setIsPromptModalOpen(false)} 
+      />
     </div>
   );
 };
