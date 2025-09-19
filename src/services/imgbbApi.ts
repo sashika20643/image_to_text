@@ -1,7 +1,7 @@
 import { ImgBBUploadResponse, ImgBBUploadError } from '../types/imgbbTypes';
 
-const IMGBB_API_KEY: string = 'ea6f97236e17aead3ade5fe286837cfb';
-const IMGBB_UPLOAD_URL: string = 'https://api.imgbb.com/1/upload';
+const IMGBB_API_KEY: string = import.meta.env.VITE_IMGBB_API_KEY || 'ea6f97236e17aead3ade5fe286837cfb';
+const IMGBB_UPLOAD_URL: string = import.meta.env.VITE_IMGBB_UPLOAD_URL || 'https://api.imgbb.com/1/upload';
 
 export class ImgBBApiService {
   public static async uploadImage(
