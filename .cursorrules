@@ -1,0 +1,115 @@
+# Cursor Rules for React + TypeScript + Vite Project
+
+## Coding Best Practices
+
+### TypeScript
+- Always use explicit types for all declared constants, variables, and function parameters
+- Use `const` assertions for immutable data
+- Prefer `interface` over `type` for object shapes
+- Use strict TypeScript configuration
+- Avoid `any` type - use `unknown` or proper typing instead
+
+### React
+- Use functional components with hooks
+- Prefer named exports over default exports for components
+- Use proper prop typing with interfaces
+- Implement proper error boundaries
+- Use React.memo() for performance optimization when needed
+
+### Code Organization
+- Use meaningful, descriptive naming conventions
+- Follow camelCase for variables and functions
+- Use PascalCase for components and interfaces
+- Use UPPER_SNAKE_CASE for constants
+- Keep functions small and focused (single responsibility)
+- Use early returns to reduce nesting
+
+## Folder Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── common/         # Generic components (Button, Input, etc.)
+│   └── features/       # Feature-specific components
+├── hooks/              # Custom React hooks
+├── services/           # API calls and external services
+├── utils/              # Utility functions and helpers
+├── types/              # TypeScript type definitions
+├── constants/          # Application constants
+├── styles/             # Global styles and theme
+└── pages/              # Page components (if using routing)
+```
+
+## File Naming
+- Components: `PascalCase.tsx` (e.g., `UserProfile.tsx`)
+- Hooks: `camelCase.ts` with `use` prefix (e.g., `useUserData.ts`)
+- Utils: `camelCase.ts` (e.g., `formatDate.ts`)
+- Types: `camelCase.ts` (e.g., `userTypes.ts`)
+- Constants: `UPPER_SNAKE_CASE.ts` (e.g., `API_ENDPOINTS.ts`)
+
+## Code Examples
+
+### Component Structure
+```typescript
+interface UserCardProps {
+  readonly user: User;
+  readonly onEdit: (userId: string) => void;
+}
+
+export const UserCard: React.FC<UserCardProps> = ({ user, onEdit }) => {
+  const handleEdit = (): void => {
+    onEdit(user.id);
+  };
+
+  return (
+    <div className="user-card">
+      <h3>{user.name}</h3>
+      <button onClick={handleEdit}>Edit</button>
+    </div>
+  );
+};
+```
+
+### Custom Hook
+```typescript
+interface UseApiResult<T> {
+  readonly data: T | null;
+  readonly loading: boolean;
+  readonly error: string | null;
+}
+
+export const useApi = <T>(url: string): UseApiResult<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Implementation...
+  
+  return { data, loading, error };
+};
+```
+
+### Constants
+```typescript
+export const API_ENDPOINTS = {
+  readonly USERS: '/api/users',
+  readonly POSTS: '/api/posts',
+} as const;
+
+export const HTTP_STATUS = {
+  readonly OK: 200,
+  readonly NOT_FOUND: 404,
+  readonly SERVER_ERROR: 500,
+} as const;
+```
+
+## General Guidelines
+- Keep components under 200 lines
+- Use meaningful variable names that describe intent
+- Add JSDoc comments for complex functions
+- Prefer composition over inheritance
+- Use proper error handling
+- Write self-documenting code
+- Keep functions pure when possible
+- Use proper TypeScript strict mode
+- Follow React best practices for performance
